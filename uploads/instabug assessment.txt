@@ -1,0 +1,3 @@
+- concuurency patterns in Go
+- slices behavior
+- SQL , indexing and know how to explain  a query plan 
