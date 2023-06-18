@@ -79,7 +79,6 @@ scikit-learn
 scipy
 shapely
 six
-sklearn
 SQLAlchemy
 sqlparse
 sympy
