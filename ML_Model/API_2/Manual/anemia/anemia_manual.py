@@ -16,7 +16,7 @@ def predict_manual(custom_values_list):
     x = ['Hemoglobin', 'MCH', 'MCV']
     custom_data = pd.DataFrame(data=np.array([custom_values_list]), columns=x)
     model = joblib.load(
-        'ML_Model/API_2/Manual/anemia/Model/GradientBoostingModel(anemia-m,f-3features)_2.h5')
+        'DocTork-master/ML_Model/API_2/Manual/anemia/Model/GradientBoostingModel(anemia-m,f-3features)_2.h5')
     custom_data['Gender_Male'] = np.random.choice([1, 0])
     output = model.predict(custom_data)[0]
     correct_predication_name = {

@@ -16,7 +16,7 @@ def predict_manual(custom_values_list):
     x = ['TSH', 'FT3', 'FT4']
     custom_data = pd.DataFrame(data=np.array([custom_values_list]), columns=x)
     model = joblib.load(
-        'ML_Model/API_2/Manual/Thyroid/Model/RandomForestModel(Thyroid_Diseases(Hyper-Hypo-Normal-Other)).h5')
+        'DocTork-master/ML_Model/API_2/Manual/Thyroid/Model/RandomForestModel(Thyroid_Diseases(Hyper-Hypo-Normal-Other)).h5')
     output = model.predict(custom_data)[0]
     correct_predication_name = {
         'Anemia': 'Normal Anemia',

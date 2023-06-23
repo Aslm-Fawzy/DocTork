@@ -64,7 +64,7 @@ def predict_image(path):
                         continue
 
             model = joblib.load(
-                'ML_Model/API_2/CV_ML_model_images/Thyroid/Model/RandomForestModel(Thyroid_Diseases(Hyper-Hypo-Normal-Other)).h5')
+                'DocTork-master/ML_Model/API_2/CV_ML_model_images/Thyroid/Model/RandomForestModel(Thyroid_Diseases(Hyper-Hypo-Normal-Other)).h5')
             features = list(model.feature_names_in_)
             data_dic = {}
             data_dic[features[0]] = dictionary['TSH']
@@ -157,7 +157,7 @@ def predict_image(path):
                         continue
 
             model = joblib.load(
-                'ML_Model/API_2/CV_ML_model_images/Thyroid/Model/RandomForestModel(Thyroid_Diseases(Hyper-Hypo-Normal-Other)).h5')
+                'DocTork-master/ML_Model/API_2/CV_ML_model_images/Thyroid/Model/RandomForestModel(Thyroid_Diseases(Hyper-Hypo-Normal-Other)).h5')
             features = list(model.feature_names_in_)
             data_dic = {}
             data_dic[features[0]] = dictionary['TSH']
@@ -202,6 +202,6 @@ def predict_image(path):
         print('Your uploaded image can\'t be detected')
         print('-----'*10)
         model = joblib.load(
-            'ML_Model/API_2/CV_ML_model_images/Thyroid/Model/RandomForestModel(Thyroid_Diseases(Hyper-Hypo-Normal-Other)).h5')
+            'DocTork-master/ML_Model/API_2/CV_ML_model_images/Thyroid/Model/RandomForestModel(Thyroid_Diseases(Hyper-Hypo-Normal-Other)).h5')
         features = list(model.feature_names_in_)
         return 'Your uploaded image can\'t be detected\n \t Enter Manually the Following Please : ', features

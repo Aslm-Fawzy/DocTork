@@ -59,11 +59,11 @@ def predict_image(path):
                         continue
 
             model_hba1c = joblib.load(
-                "ML_Model/API_2/CV_ML_model_images/Diabetes/Model/HbA1c.h5")
+                "DocTork-master/ML_Model/API_2/CV_ML_model_images/Diabetes/Model/HbA1c.h5")
             model_fpg = joblib.load(
-                "ML_Model/API_2/CV_ML_model_images/Diabetes/Model/FPG.h5")
+                "DocTork-master/ML_Model/API_2/CV_ML_model_images/Diabetes/Model/FPG.h5")
             model_2hrpp = joblib.load(
-                "ML_Model/API_2/CV_ML_model_images/Diabetes/Model/HrPP.h5")
+                "DocTork-master/ML_Model/API_2/CV_ML_model_images/Diabetes/Model/HrPP.h5")
             faatures_hbalc = list(model_hba1c.feature_names_in_)
             faatures_fpg = list(model_fpg.feature_names_in_)
             faatures_2hrpp = list(model_2hrpp.feature_names_in_)
@@ -187,11 +187,11 @@ def predict_image(path):
                         continue
 
             model_hba1c = joblib.load(
-                "ML_Model/API_2/CV_ML_model_images/Diabetes/Model/HbA1c.h5")
+                "DocTork-master/ML_Model/API_2/CV_ML_model_images/Diabetes/Model/HbA1c.h5")
             model_fpg = joblib.load(
-                "ML_Model/API_2/CV_ML_model_images/Diabetes/Model/FPG.h5")
+                "DocTork-master/ML_Model/API_2/CV_ML_model_images/Diabetes/Model/FPG.h5")
             model_2hrpp = joblib.load(
-                "ML_Model/API_2/CV_ML_model_images/Diabetes/Model/HrPP.h5")
+                "DocTork-master/ML_Model/API_2/CV_ML_model_images/Diabetes/Model/HrPP.h5")
             faatures_hbalc = list(model_hba1c.feature_names_in_)
             faatures_fpg = list(model_fpg.feature_names_in_)
             faatures_2hrpp = list(model_2hrpp.feature_names_in_)
@@ -273,11 +273,11 @@ def predict_image(path):
         print('Your uploaded image can\'t be detected')
         print('-----'*10)
         model_hba1c = joblib.load(
-            "ML_Model/API_2/CV_ML_model_images/Diabetes/Model/HbA1c.h5")
+            "DocTork-master/ML_Model/API_2/CV_ML_model_images/Diabetes/Model/HbA1c.h5")
         model_fpg = joblib.load(
-            "ML_Model/API_2/CV_ML_model_images/Diabetes/Model/FPG.h5")
+            "DocTork-master/ML_Model/API_2/CV_ML_model_images/Diabetes/Model/FPG.h5")
         model_2hrpp = joblib.load(
-            "ML_Model/API_2/CV_ML_model_images/Diabetes/Model/HrPP.h5")
+            "DocTork-master/ML_Model/API_2/CV_ML_model_images/Diabetes/Model/HrPP.h5")
         faatures_hbalc = list(model_hba1c.feature_names_in_)
         faatures_fpg = list(model_fpg.feature_names_in_)
         faatures_2hrpp = list(model_2hrpp.feature_names_in_)

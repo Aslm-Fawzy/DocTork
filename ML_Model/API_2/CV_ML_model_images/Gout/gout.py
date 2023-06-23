@@ -18,14 +18,14 @@ import pandas as pd
 import joblib
 import easyocr
 
-pytesseract.pytesseract.tesseract_cmd = r"C:/Program Files/Tesseract-OCR/tesseract.exe"
+pytesseract.pytesseract.tesseract_cmd = r"C:\Program Files\Tesseract-OCR\tesseract.exe"
 
 
 def predict_image(path):
 
-    keywords = ['S.uric acid', 'Gender']
+    keywords = ['S.uric acid','Gender']    
     try:
-
+      
         try:
 
             img = cv2.imread(path)
@@ -56,14 +56,14 @@ def predict_image(path):
                                         '\d+\.{0,1}\d*', list_).group()
                                     dictionary[keyword] = float(result)
                                     break
-
-                            elif re.search('Male', line, re.IGNORECASE):
-                                if line.startswith('M'):
+                                    
+                            elif re.search('Male', line,re.IGNORECASE):
+                                if line.startswith('M') :
                                     dictionary['Gender'] = 'Male'
                                     break
-                                elif line.startswith('F'):
-                                    dictionary['Gender'] = 'Female'
-                                    break
+                                elif line.startswith('F') :  
+                                    dictionary['Gender'] = 'Female'                                    
+                                    break                                   
                         except:
                             if re.search(keyword, line, re.IGNORECASE):
                                 list_ = str(line.split())
@@ -74,22 +74,21 @@ def predict_image(path):
                     except:
                         continue
 
-            model = joblib.load(
-                'ML_Model/API_2/CV_ML_model_images/Gout/Model/EnsembleModel(DT-LR-SVM)(Gout_Diseases(Gout-Hypouricosuiria-Normal)).h5')
-            features = list(model.feature_names_in_)
+            model = joblib.load('DocTork-master/ML_Model/API_2/PDF/Gout/Model/EnsembleModel(DT-LR-SVM)(Gout_Diseases(Gout-Hypouricosuiria-Normal)).h5')
+            features  = list(model.feature_names_in_)
             data_dic = {}
             data_dic[features[0]] = dictionary['S.uric acid']
-            if dictionary['Gender'].startswith('F'):
-                data_dic[features[1]] = 0
-            elif dictionary['Gender'].startswith('M'):
+            if dictionary['Gender'].startswith('F') :
+                data_dic[features[1]] = 0 
+            elif dictionary['Gender'].startswith('M') : 
                 data_dic[features[1]] = 1
-
-            custom_data = pd.DataFrame(data=[data_dic])
-            # print('-----'*10)
-            # print('Your Input :\n',custom_data)
-            # print('-----'*10)
-            output = model.predict(custom_data)[0]
-            # print('\t Output :',output)
+                
+            custom_data = pd.DataFrame(data = [data_dic] )   
+                            #print('-----'*10)
+                            #print('Your Input :\n',custom_data)
+                            #print('-----'*10)       
+            output = model.predict(custom_data)[0] 
+                            #print('\t Output :',output)
             correct_predication_name = {
                 'Anemia': 'Normal Anemia',
                 'Good': 'Normal ',
@@ -131,68 +130,64 @@ def predict_image(path):
                 if probability >= 0.6:
                     text = i[1]
 
-                for keyword in keywords:
-                    try:
-                        try:
-                            if re.search(keyword, text, re.IGNORECASE):
-                                if '=' in text:
-                                    list_ = text.split('=')
-                                    list_ = str(list_)
-                                    result = re.search(
-                                        '\d+\.{0,1}\d*', list_).group()
+                for keyword in keywords :
+                        try :
+                            try :
+                                if re.search(keyword, text, re.IGNORECASE):
+                                    if '=' in text :
+                                        list_  = text.split('=')
+                                        list_ = str(list_)
+                                        result = re.search('\d+\.{0,1}\d*', list_).group()
+                                        dictionary[keyword] = float(result)
+                                        break
+                                    elif ':' in text :
+                                        list_  = text.split(':')
+                                        list_ = str(list_)
+                                        result = re.search('\d+\.{0,1}\d*', list_).group()
+                                        dictionary[keyword] = float(result)
+                                        break
+
+                                    elif output[output.index(i) + 1] [1] == '8' :
+                                              dictionary[keyword] = float(output[output.index(i) + 2] [1])  
+                                              break                                              
+
+                                    
+                                elif re.search('Male', line,re.IGNORECASE):
+                                    if line.startswith('M') :
+                                        dictionary['Gender'] = 'Male'
+                                        break
+                                    elif line.startswith('F') :  
+                                        dictionary['Gender'] = 'Female'                                    
+                                        break 
+
+                            except : 
+                                if re.search(keyword, text, re.IGNORECASE):
+                                    list_  = str(text.split())
+                                    result = re.search('\d+\.{0,1}\d*', list_).group()
                                     dictionary[keyword] = float(result)
-                                    break
-                                elif ':' in text:
-                                    list_ = text.split(':')
-                                    list_ = str(list_)
-                                    result = re.search(
-                                        '\d+\.{0,1}\d*', list_).group()
-                                    dictionary[keyword] = float(result)
-                                    break
+                                    break                    
+                        except :
+                            continue
 
-                                elif output[output.index(i) + 1][1] == '8':
-                                    dictionary[keyword] = float(
-                                        output[output.index(i) + 2][1])
-                                    break
-
-                            elif re.search('Male', line, re.IGNORECASE):
-                                if line.startswith('M'):
-                                    dictionary['Gender'] = 'Male'
-                                    break
-                                elif line.startswith('F'):
-                                    dictionary['Gender'] = 'Female'
-                                    break
-
-                        except:
-                            if re.search(keyword, text, re.IGNORECASE):
-                                list_ = str(text.split())
-                                result = re.search(
-                                    '\d+\.{0,1}\d*', list_).group()
-                                dictionary[keyword] = float(result)
-                                break
-                    except:
-                        continue
-
-            model = joblib.load(
-                'ML_Model/API_2/CV_ML_model_images/Gout/Model/EnsembleModel(DT-LR-SVM)(Gout_Diseases(Gout-Hypouricosuiria-Normal)).h5')
-            features = list(model.feature_names_in_)
+            model = joblib.load('DocTork-master/ML_Model/API_2/PDF/Gout/Model/EnsembleModel(DT-LR-SVM)(Gout_Diseases(Gout-Hypouricosuiria-Normal)).h5')
+            features  = list(model.feature_names_in_)
             data_dic = {}
             data_dic[features[0]] = dictionary['S.uric acid']
-            if dictionary['Gender'].startswith('F'):
-
-                data_dic[features[1]] = 0
-            elif dictionary['Gender'].startswith('M'):
+            if dictionary['Gender'].startswith('F') :
+              
+                data_dic[features[1]] = 0 
+            elif dictionary['Gender'].startswith('M') : 
                 data_dic[features[1]] = 1
 
-            custom_data = pd.DataFrame(data=[data_dic])
-            # print('-----'*10)
-            # print('Your Input :\n',custom_data)
-            # print('-----'*10)
-            output = model.predict(custom_data)[0]
+            custom_data = pd.DataFrame(data = [data_dic] )   
+                            #print('-----'*10)
+                            #print('Your Input :\n',custom_data)
+                            #print('-----'*10)       
+            output = model.predict(custom_data)[0] 
             correct_predication_name = {
-                'Anemia': 'Normal Anemia',
-                'Good': 'Normal ',
-                'Micro': 'Microcytic Anemia',
+                           'Anemia': 'Normal Anemia',
+                          'Good': 'Normal ',
+                           'Micro': 'Microcytic Anemia',
                           'Macro': 'Macrocytic Anemia',
                           'CML': 'Chronic Myelogenous Leukemia',
                           'Acute L': 'Acute Lymphoblastic Leukemia',
@@ -217,14 +212,18 @@ def predict_image(path):
 
             patient_output_disease = correct_predication_name[output]
             return patient_output_disease
-
+            
     except:
-        print('Your uploaded image can\'t be detected')
-        print('-----'*10)
-        model = joblib.load(
-            'ML_Model/API_2/CV_ML_model_images/Gout/Model/EnsembleModel(DT-LR-SVM)(Gout_Diseases(Gout-Hypouricosuiria-Normal)).h5')
-        features = list(model.feature_names_in_)
-        return 'Your uploaded image can\'t be detected\n \t Enter Manually the Following Please : ', features[:-1]
+                print('Your uploaded image can\'t be detected')
+                print('-----'*10)       
+                model = joblib.load('DocTork-master/ML_Model/API_2/PDF/Gout/Model/EnsembleModel(DT-LR-SVM)(Gout_Diseases(Gout-Hypouricosuiria-Normal)).h5')
+                features  = list(model.feature_names_in_)        
+                return 'Your uploaded image can\'t be detected\n \t Enter Manually the Following Please : ', features[:-1]
+
 
 
 # In[ ]:
+
+
+
+

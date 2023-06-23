@@ -22,83 +22,6 @@ def predict_pdf(path):
         try:
             custom_values_list = []
             for x in keywords:
-                # ourpdf
-                # Parsing the content of our pdf into a list of sentences
-                rawText1 = parser.from_file(pdf)
-                rawList1 = rawText1['content'].splitlines()
-                # Iterating inside the list of sentences
-                for i in rawList1:
-                    if re.search(x, i, re.IGNORECASE):
-                        # Handling extracting number found in FT3 and FT4
-                        if 'FT' in x:
-                            # Our chosen sentence
-                            # Converting our little sentence to a list and splitting it into words to finally extract the needed number.
-                            list_ = list(i.split())
-                            list_ = str(list_)
-
-                            try:
-                                # Appling re to find the number after a certain word
-                                # Result is the number we need (VERY IMPORTANT)
-                                result = re.findall(r'\d+\.{0,1}\d*', list_)[1]
-                                result = float(result)
-
-                            except:
-                                continue
-
-                        else:
-                            # Our chosen sentence
-                            # Converting our little sentence to a list and splitting it into words to finally extract the needed number.
-                            list_ = list(i.split())
-                            list_ = str(list_)
-
-                            # Appling re to find the number after a certain word
-                            # Result is the number we need (VERY IMPORTANT)
-                            try:
-                                result = re.search(
-                                    '\d+\.{0,1}\d*', list_).group()
-                                result = float(result)
-
-                            except:
-                                continue
-
-                        custom_values_list.append(result)
-            custom_data = pd.DataFrame(data=np.array(
-                [custom_values_list]), columns=keywords)
-            model = joblib.load(
-                'ML_Model/API_2/PDF/Thyroid/Model/RandomForestModel(Thyroid_Diseases(Hyper-Hypo-Normal-Other)).h5')
-            output = model.predict(custom_data)[0]
-            correct_predication_name = {
-                'Anemia': 'Normal Anemia',
-                'Good': 'Normal ',
-                'Micro': 'Microcytic Anemia',
-                'Macro': 'Macrocytic Anemia',
-                'CML': 'Chronic Myelogenous Leukemia',
-                'Acute L': 'Acute Lymphoblastic Leukemia',
-                'HyperTyroid':  'Hyperthyroidism',
-                'Hypothyroid': 'Hypothyroidism',
-                'Other Thyroid Abnormalities':  'Other Thyroid Abnormalities',
-                'Normal':  'Normal ',
-                'Hyperuricosuria (Gout)': 'Hyperuricemia (Gout)',
-                'Hypouricosuria ':  'Hypouricemia',
-                'Jaundice':  'Jaundice',
-                'Diabetic': 'Diabetes',
-                'Pre Diabetic': 'Prediabetes',
-                'Hypoglycemia': 'Hypoglycemia',
-                'Prostatic_Cancer':  'Prostatic Cancer',
-                'Rheumatiod_Arthities': 'Rheumatoid Arthritis',
-                'Hypoparathyroid': 'Hypoparathyroidism',
-                'Another Disease':  'Another Disease',
-                'Hyperparathyroid': 'Hyperparathyroidism',
-                'Acute  L or CML':  'Acute Lymphoblastic Lekumia and Chronic Myelogenous Lekumia',
-                'Good':  'Normal',
-                'Normal': 'Normal'}
-
-            patient_output_disease = correct_predication_name[output]
-            return patient_output_disease
-
-        except:
-            custom_values_list = []
-            for x in keywords:
               # Open the PDF file in binary mode
                 with open(path, 'rb') as pdf_file:
                     # Create a PDF reader object
@@ -148,7 +71,7 @@ def predict_pdf(path):
             custom_data = pd.DataFrame(data=np.array(
                 [custom_values_list]), columns=keywords)
             model = joblib.load(
-                'ML_Model/API_2/PDF/Thyroid/Model/RandomForestModel(Thyroid_Diseases(Hyper-Hypo-Normal-Other)).h5')
+                'DocTork-master/ML_Model/API_2/PDF/Thyroid/Model/RandomForestModel(Thyroid_Diseases(Hyper-Hypo-Normal-Other)).h5')
             output = model.predict(custom_data)[0]
             correct_predication_name = {
                 'Anemia': 'Normal Anemia',
@@ -179,8 +102,86 @@ def predict_pdf(path):
             patient_output_disease = correct_predication_name[output]
             return patient_output_disease
 
+
+        except:
+            custom_values_list = []
+            for x in keywords:
+                # ourpdf
+                # Parsing the content of our pdf into a list of sentences
+                rawText1 = parser.from_file(pdf)
+                rawList1 = rawText1['content'].splitlines()
+                # Iterating inside the list of sentences
+                for i in rawList1:
+                    if re.search(x, i, re.IGNORECASE):
+                        # Handling extracting number found in FT3 and FT4
+                        if 'FT' in x:
+                            # Our chosen sentence
+                            # Converting our little sentence to a list and splitting it into words to finally extract the needed number.
+                            list_ = list(i.split())
+                            list_ = str(list_)
+
+                            try:
+                                # Appling re to find the number after a certain word
+                                # Result is the number we need (VERY IMPORTANT)
+                                result = re.findall(r'\d+\.{0,1}\d*', list_)[1]
+                                result = float(result)
+
+                            except:
+                                continue
+
+                        else:
+                            # Our chosen sentence
+                            # Converting our little sentence to a list and splitting it into words to finally extract the needed number.
+                            list_ = list(i.split())
+                            list_ = str(list_)
+
+                            # Appling re to find the number after a certain word
+                            # Result is the number we need (VERY IMPORTANT)
+                            try:
+                                result = re.search(
+                                    '\d+\.{0,1}\d*', list_).group()
+                                result = float(result)
+
+                            except:
+                                continue
+
+                        custom_values_list.append(result)
+            custom_data = pd.DataFrame(data=np.array(
+                [custom_values_list]), columns=keywords)
+            model = joblib.load(
+                'DocTork-master/ML_Model/API_2/PDF/Thyroid/Model/RandomForestModel(Thyroid_Diseases(Hyper-Hypo-Normal-Other)).h5')
+            output = model.predict(custom_data)[0]
+            correct_predication_name = {
+                'Anemia': 'Normal Anemia',
+                'Good': 'Normal ',
+                'Micro': 'Microcytic Anemia',
+                'Macro': 'Macrocytic Anemia',
+                'CML': 'Chronic Myelogenous Leukemia',
+                'Acute L': 'Acute Lymphoblastic Leukemia',
+                'HyperTyroid':  'Hyperthyroidism',
+                'Hypothyroid': 'Hypothyroidism',
+                'Other Thyroid Abnormalities':  'Other Thyroid Abnormalities',
+                'Normal':  'Normal ',
+                'Hyperuricosuria (Gout)': 'Hyperuricemia (Gout)',
+                'Hypouricosuria ':  'Hypouricemia',
+                'Jaundice':  'Jaundice',
+                'Diabetic': 'Diabetes',
+                'Pre Diabetic': 'Prediabetes',
+                'Hypoglycemia': 'Hypoglycemia',
+                'Prostatic_Cancer':  'Prostatic Cancer',
+                'Rheumatiod_Arthities': 'Rheumatoid Arthritis',
+                'Hypoparathyroid': 'Hypoparathyroidism',
+                'Another Disease':  'Another Disease',
+                'Hyperparathyroid': 'Hyperparathyroidism',
+                'Acute  L or CML':  'Acute Lymphoblastic Lekumia and Chronic Myelogenous Lekumia',
+                'Good':  'Normal',
+                'Normal': 'Normal'}
+
+            patient_output_disease = correct_predication_name[output]
+            return patient_output_disease    
+                
     except:
         model = joblib.load(
-            'ML_Model/API_2/PDF/Thyroid/Model/RandomForestModel(Thyroid_Diseases(Hyper-Hypo-Normal-Other)).h5')
+            'DocTork-master/ML_Model/API_2/PDF/Thyroid/Model/RandomForestModel(Thyroid_Diseases(Hyper-Hypo-Normal-Other)).h5')
         features = list(model.feature_names_in_)
         return 'Your uploaded PDF can\'t be detected \n \t Enter Manually the Following Please : ', features

@@ -22,33 +22,31 @@ def predict_pdf(path):
         try:
             custom_values_list = []
             for x in keywords:
-                # ourpdf
-                # Parsing the content of our pdf into a list of sentences
-                rawText1 = parser.from_file(pdf)
-                rawList1 = rawText1['content'].splitlines()
-                # Iterating inside the list of sentences
-                for i in rawList1:
-                    if re.search(x, i, re.IGNORECASE):
+              # Open the PDF file in binary mode
+                with open(path, 'rb') as pdf_file:
+                    # Create a PDF reader object
+                    pdf_reader = PyPDF2.PdfReader(pdf_file)
 
-                        # Our chosen sentence
-                        # Converting our little sentence to a list and splitting it into words to finally extract the needed number.
-                        list_ = list(i.split())
-                        list_ = str(list_)
+                    # Get the first page of the PDF file
+                    page = pdf_reader.pages[0]
 
-                        # Appling re to find the number after a certain word
-                        # Result is the number we need (VERY IMPORTANT)
-                        try:
-                            result = re.search('\d+\.{0,1}\d*', list_).group()
-                            result = float(result)
+                    # Extract the text from the page
+                    text = page.extract_text()
+                    for i in text.split('\n'):
+                        if re.search(x, i, re.IGNORECASE):
+                            list_ = list(i.split())
+                            list_ = str(list_)
+                            try:
+                                result = re.search(
+                                    '\d+\.{0,1}\d*', list_).group()
+                                result = float(result)
 
-                        except:
-                            continue
-
-                        custom_values_list.append(result)
-
+                            except:
+                                continue
+                            custom_values_list.append(result)
             pred_mapping = {'1': 'Jaundice',
                             '0': 'Normal'}
-            model = joblib.load('ML_Model/API_2/PDF/Jaundice/Model/jaunice.h5')
+            model = joblib.load('DocTork-master/ML_Model/API_2/PDF/Jaundice/Model/jaunice.h5')
             custom_data = pd.DataFrame(data=np.array(
                 [custom_values_list]), columns=list(model.feature_names_in_)[:-1])
             custom_data['Gender'] = np.random.choice([1, 0])
@@ -81,36 +79,38 @@ def predict_pdf(path):
                 'Normal': 'Normal'}
 
             patient_output_disease = correct_predication_name[output]
-            return patient_output_disease
-
+            return patient_output_disease            
+        
         except:
             custom_values_list = []
             for x in keywords:
-              # Open the PDF file in binary mode
-                with open(path, 'rb') as pdf_file:
-                    # Create a PDF reader object
-                    pdf_reader = PyPDF2.PdfReader(pdf_file)
+                # ourpdf
+                # Parsing the content of our pdf into a list of sentences
+                rawText1 = parser.from_file(pdf)
+                rawList1 = rawText1['content'].splitlines()
+                # Iterating inside the list of sentences
+                for i in rawList1:
+                    if re.search(x, i, re.IGNORECASE):
 
-                    # Get the first page of the PDF file
-                    page = pdf_reader.pages[0]
+                        # Our chosen sentence
+                        # Converting our little sentence to a list and splitting it into words to finally extract the needed number.
+                        list_ = list(i.split())
+                        list_ = str(list_)
 
-                    # Extract the text from the page
-                    text = page.extract_text()
-                    for i in text.split('\n'):
-                        if re.search(x, i, re.IGNORECASE):
-                            list_ = list(i.split())
-                            list_ = str(list_)
-                            try:
-                                result = re.search(
-                                    '\d+\.{0,1}\d*', list_).group()
-                                result = float(result)
+                        # Appling re to find the number after a certain word
+                        # Result is the number we need (VERY IMPORTANT)
+                        try:
+                            result = re.search('\d+\.{0,1}\d*', list_).group()
+                            result = float(result)
 
-                            except:
-                                continue
-                            custom_values_list.append(result)
+                        except:
+                            continue
+
+                        custom_values_list.append(result)
+
             pred_mapping = {'1': 'Jaundice',
                             '0': 'Normal'}
-            model = joblib.load('ML_Model/API_2/PDF/Jaundice/Model/jaunice.h5')
+            model = joblib.load('DocTork-master/ML_Model/API_2/PDF/Jaundice/Model/jaunice.h5')
             custom_data = pd.DataFrame(data=np.array(
                 [custom_values_list]), columns=list(model.feature_names_in_)[:-1])
             custom_data['Gender'] = np.random.choice([1, 0])
@@ -146,6 +146,6 @@ def predict_pdf(path):
             return patient_output_disease
 
     except:
-        model = joblib.load('ML_Model/API_2/PDF/Jaundice/Model/jaunice.h5')
+        model = joblib.load('DocTork-master/ML_Model/API_2/PDF/Jaundice/Model/jaunice.h5')
         features = list(model.feature_names_in_)
         return 'Your uploaded PDF can\'t be detected \n \t Enter Manually the Following Please : ', features[:-1]

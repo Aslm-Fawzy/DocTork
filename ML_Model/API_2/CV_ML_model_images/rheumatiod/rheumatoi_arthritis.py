@@ -66,7 +66,7 @@ def predict_image(path):
             pred_mapping = {'1': 'Rheumatiod_Arthities',
                             '0': 'Normal'}
             model = joblib.load(
-                'ML_Model/API_2/CV_ML_model_images/rheumatiod/Model/Rheumatiod.h5')
+                'DocTork-master/ML_Model/API_2/CV_ML_model_images/rheumatiod/Model/Rheumatiod.h5')
             features = list(model.feature_names_in_)
             data_dic = {}
             data_dic[features[0]] = dictionary['Anti CPP']
@@ -150,7 +150,7 @@ def predict_image(path):
             pred_mapping = {'1': 'Rheumatiod_Arthities',
                             '0': 'Normal'}
             model = joblib.load(
-                'ML_Model/API_2/CV_ML_model_images/rheumatiod/Model/Rheumatiod.h5')
+                'DocTork-master/ML_Model/API_2/CV_ML_model_images/rheumatiod/Model/Rheumatiod.h5')
             features = list(model.feature_names_in_)
             data_dic = {}
             data_dic[features[0]] = dictionary['Anti CPP']
@@ -192,6 +192,6 @@ def predict_image(path):
         print('Your uploaded image can\'t be detected')
         print('-----'*10)
         model = joblib.load(
-            'ML_Model/API_2/CV_ML_model_images/rheumatiod/Model/Rheumatiod.h5')
+            'DocTork-master/ML_Model/API_2/CV_ML_model_images/rheumatiod/Model/Rheumatiod.h5')
         features = list(model.feature_names_in_)
         return 'Your uploaded image can\'t be detected\n \t Enter Manually the Following Please : ', features[:-1]

@@ -51,7 +51,6 @@ mail = Mail()
 app = Flask(__name__, instance_relative_config=False)
 db = SQLAlchemy()
 
-
 @app.route('/doctork/predict-manual', methods=['POST'])
 def predict():
     data = request.get_json(force=True)

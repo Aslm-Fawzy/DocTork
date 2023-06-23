@@ -13,7 +13,7 @@ import joblib
 
 # Loading Model
 model = joblib.load(
-    'ML_Model/API_1/Disease_Symptoms_and_Tests/Disease_Symtopms/Model/EnsembleModel(RF-KNN-LR)(Symtypoms).h5')
+    'DocTork-master/ML_Model/API_1/Disease_Symptoms_and_Tests/Disease_Symtopms/Model/EnsembleModel(RF-KNN-LR)(Symtypoms).h5')
 
 
 def symptoms_tests_features(_symptomscheckedItems):
@@ -23,11 +23,11 @@ def symptoms_tests_features(_symptomscheckedItems):
 
     # Reading Data for Features to Extracting Features for each Disease
     disease_features = pd.read_excel(
-        'ML_Model/API_1/Disease_Symptoms_and_Tests/Features_of_Diseases/Features and Diseases.xlsx')
+        'DocTork-master/ML_Model/API_1/Disease_Symptoms_and_Tests/Features_of_Diseases/Features and Diseases.xlsx')
 
     # Reading Data for Lab Test to Extracting Required Tests for each Disease
     disease_lab_tests = pd.read_excel(
-        'ML_Model/API_1/Disease_Symptoms_and_Tests/Lab_Test/Diseases and Lab Test.xlsx')
+        'DocTork-master/ML_Model/API_1/Disease_Symptoms_and_Tests/Lab_Test/Diseases and Lab Test.xlsx')
 
     # list come from Application (Testing only keep the comment after test API )
 

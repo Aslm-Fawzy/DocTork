@@ -66,7 +66,7 @@ def predict_image(path):
             pred_mapping = {'1': 'Jaundice',
                             '0': 'Normal'}
             model = joblib.load(
-                'ML_Model/API_2/CV_ML_model_images/Jaundice/Model/jaunice.h5')
+                'DocTork-master/ML_Model/API_2/CV_ML_model_images/Jaundice/Model/jaunice.h5')
             features = list(model.feature_names_in_)
             data_dic = {}
             data_dic[features[0]] = dictionary['TSB']
@@ -150,7 +150,7 @@ def predict_image(path):
             pred_mapping = {'1': 'Jaundice',
                             '0': 'Normal'}
             model = joblib.load(
-                'ML_Model/API_2/CV_ML_model_images/Jaundice/Model/jaunice.h5')
+                'DocTork-master/ML_Model/API_2/CV_ML_model_images/Jaundice/Model/jaunice.h5')
             features = list(model.feature_names_in_)
             data_dic = {}
             data_dic[features[0]] = dictionary['TSB']
@@ -191,6 +191,6 @@ def predict_image(path):
         print('Your uploaded image can\'t be detected')
         print('-----'*10)
         model = joblib.load(
-            'ML_Model/API_2/CV_ML_model_images/Jaundice/Model/jaunice.h5')
+            'DocTork-master/ML_Model/API_2/CV_ML_model_images/Jaundice/Model/jaunice.h5')
         features = list(model.feature_names_in_)
         return 'Your uploaded image can\'t be detected\n \t Enter Manually the Following Please : ', features[:-1]

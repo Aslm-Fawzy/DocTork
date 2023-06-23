@@ -17,7 +17,7 @@ def predict_manual(custom_values_list):
     x = ['Anti_CPP(u/ml)']
     custom_data = pd.DataFrame(data=np.array([custom_values_list]), columns=x)
     custom_data['Gender'] = np.random.choice([1, 0])
-    model = joblib.load('ML_Model/API_2/Manual/Rheumatiod/Model/Rheumatiod.h5')
+    model = joblib.load('DocTork-master/ML_Model/API_2/Manual/Rheumatiod/Model/Rheumatiod.h5')
     output = model.predict(custom_data)[0]
     pred_mapping = {'1': 'Rheumatiod_Arthities',
                     '0': 'Normal'}

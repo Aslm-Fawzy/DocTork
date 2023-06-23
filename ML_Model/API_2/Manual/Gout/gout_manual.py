@@ -17,7 +17,7 @@ def predict_manual(custom_values_list):
     custom_data = pd.DataFrame(data=np.array([custom_values_list]), columns=x)
     custom_data['Gender_Male'] = np.random.choice([1, 0])
     model = joblib.load(
-        'ML_Model/API_2/Manual/Gout/Model/EnsembleModel(DT-LR-SVM)(Gout_Diseases(Gout-Hypouricosuiria-Normal)).h5')
+        'DocTork-master/ML_Model/API_2/Manual/Gout/Model/EnsembleModel(DT-LR-SVM)(Gout_Diseases(Gout-Hypouricosuiria-Normal)).h5')
     output = model.predict(custom_data)[0]
     correct_predication_name = {
         'Anemia': 'Normal Anemia',

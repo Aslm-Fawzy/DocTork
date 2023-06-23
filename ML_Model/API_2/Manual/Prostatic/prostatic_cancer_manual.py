@@ -18,7 +18,7 @@ def predict_manual(custom_values_list):
     custom_data = pd.DataFrame(data=np.array([custom_values_list]), columns=x)
     custom_data['Gender'] = 1
     model = joblib.load(
-        'ML_Model/API_2/Manual/Prostatic/Model/Prostatic cancer.h5')
+        'DocTork-master/ML_Model/API_2/Manual/Prostatic/Model/Prostatic cancer.h5')
     output = model.predict(custom_data)[0]
     pred_mapping = {'1': 'Prostatic_Cancer',
                     '0': 'Normal'}

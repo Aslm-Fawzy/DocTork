@@ -22,6 +22,67 @@ def predict_pdf(path):
         try:
             custom_values_list = []
             for x in keywords:
+              # Open the PDF file in binary mode
+                with open(path, 'rb') as pdf_file:
+                    # Create a PDF reader object
+                    pdf_reader = PyPDF2.PdfReader(pdf_file)
+
+                    # Get the first page of the PDF file
+                    page = pdf_reader.pages[0]
+
+                    # Extract the text from the page
+                    text = page.extract_text()
+                    for i in text.split('\n'):
+                        i = i.replace(' ', '')
+                        if re.search(x, i, re.IGNORECASE):
+                            list_ = list(i.split())
+                            list_ = str(list_)
+                            try:
+                                result = re.search(
+                                    '\d+\.{0,1}\d*', list_).group()
+                                result = float(result)
+
+                            except:
+                                continue
+                            custom_values_list.append(result)
+
+            model = joblib.load(
+                "DocTork-master/ML_Model/API_2/PDF/Parathyroid/Model/EnsembleModel(RF,DT,GB)(Hyper- Hypo-Anthor-Normal).h5")
+            custom_data = pd.DataFrame(data=np.array(
+                [custom_values_list]), columns=list(model.feature_names_in_)[:-1])
+            custom_data['Gender_Male'] = np.random.choice([1, 0])
+            output = model.predict(custom_data)[0]
+            correct_predication_name = {
+                'Anemia': 'Normal Anemia',
+                'Good': 'Normal ',
+                'Micro': 'Microcytic Anemia',
+                'Macro': 'Macrocytic Anemia',
+                'CML': 'Chronic Myelogenous Leukemia',
+                'Acute L': 'Acute Lymphoblastic Leukemia',
+                'HyperTyroid':  'Hyperthyroidism',
+                'Hypothyroid': 'Hypothyroidism',
+                'Other Thyroid Abnormalities':  'Other Thyroid Abnormalities',
+                'Normal':  'Normal ',
+                'Hyperuricosuria (Gout)': 'Hyperuricemia (Gout)',
+                'Hypouricosuria ':  'Hypouricemia',
+                'Jaundice':  'Jaundice',
+                'Diabetic': 'Diabetes',
+                'Pre Diabetic': 'Prediabetes',
+                'Hypoglycemia': 'Hypoglycemia',
+                'Prostatic_Cancer':  'Prostatic Cancer',
+                'Rheumatiod_Arthities': 'Rheumatoid Arthritis',
+                'Hypoparathyroid': 'Hypoparathyroidism',
+                'Another Disease':  'Another Disease',
+                'Hyperparathyroid': 'Hyperparathyroidism',
+                'Acute  L or CML':  'Acute Lymphoblastic Lekumia and Chronic Myelogenous Lekumia',
+                'Good':  'Normal',
+                'Normal': 'Normal'}
+
+            patient_output_disease = correct_predication_name[output]
+            return patient_output_disease
+        except:
+            custom_values_list = []
+            for x in keywords:
                 # ourpdf
                 # Parsing the content of our pdf into a list of sentences
                 rawText1 = parser.from_file(pdf)
@@ -48,7 +109,7 @@ def predict_pdf(path):
                         custom_values_list.append(result)
 
             model = joblib.load(
-                "ML_Model/API_2/PDF/Parathyroid/Model/EnsembleModel(RF,DT,GB)(Hyper- Hypo-Anthor-Normal).h5")
+                "DocTork-master/ML_Model/API_2/PDF/Parathyroid/Model/EnsembleModel(RF,DT,GB)(Hyper- Hypo-Anthor-Normal).h5")
             custom_data = pd.DataFrame(data=np.array(
                 [custom_values_list]), columns=list(model.feature_names_in_)[:-1])
             custom_data['Gender_Male'] = np.random.choice([1, 0])
@@ -81,71 +142,8 @@ def predict_pdf(path):
 
             patient_output_disease = correct_predication_name[output]
             return patient_output_disease
-
-        except:
-            custom_values_list = []
-            for x in keywords:
-              # Open the PDF file in binary mode
-                with open(path, 'rb') as pdf_file:
-                    # Create a PDF reader object
-                    pdf_reader = PyPDF2.PdfReader(pdf_file)
-
-                    # Get the first page of the PDF file
-                    page = pdf_reader.pages[0]
-
-                    # Extract the text from the page
-                    text = page.extract_text()
-                    for i in text.split('\n'):
-                        i = i.replace(' ', '')
-                        if re.search(x, i, re.IGNORECASE):
-                            list_ = list(i.split())
-                            list_ = str(list_)
-                            try:
-                                result = re.search(
-                                    '\d+\.{0,1}\d*', list_).group()
-                                result = float(result)
-
-                            except:
-                                continue
-                            custom_values_list.append(result)
-
-            model = joblib.load(
-                "ML_Model/API_2/PDF/Parathyroid/Model/EnsembleModel(RF,DT,GB)(Hyper- Hypo-Anthor-Normal).h5")
-            custom_data = pd.DataFrame(data=np.array(
-                [custom_values_list]), columns=list(model.feature_names_in_)[:-1])
-            custom_data['Gender_Male'] = np.random.choice([1, 0])
-            output = model.predict(custom_data)[0]
-            correct_predication_name = {
-                'Anemia': 'Normal Anemia',
-                'Good': 'Normal ',
-                'Micro': 'Microcytic Anemia',
-                'Macro': 'Macrocytic Anemia',
-                'CML': 'Chronic Myelogenous Leukemia',
-                'Acute L': 'Acute Lymphoblastic Leukemia',
-                'HyperTyroid':  'Hyperthyroidism',
-                'Hypothyroid': 'Hypothyroidism',
-                'Other Thyroid Abnormalities':  'Other Thyroid Abnormalities',
-                'Normal':  'Normal ',
-                'Hyperuricosuria (Gout)': 'Hyperuricemia (Gout)',
-                'Hypouricosuria ':  'Hypouricemia',
-                'Jaundice':  'Jaundice',
-                'Diabetic': 'Diabetes',
-                'Pre Diabetic': 'Prediabetes',
-                'Hypoglycemia': 'Hypoglycemia',
-                'Prostatic_Cancer':  'Prostatic Cancer',
-                'Rheumatiod_Arthities': 'Rheumatoid Arthritis',
-                'Hypoparathyroid': 'Hypoparathyroidism',
-                'Another Disease':  'Another Disease',
-                'Hyperparathyroid': 'Hyperparathyroidism',
-                'Acute  L or CML':  'Acute Lymphoblastic Lekumia and Chronic Myelogenous Lekumia',
-                'Good':  'Normal',
-                'Normal': 'Normal'}
-
-            patient_output_disease = correct_predication_name[output]
-            return patient_output_disease
-
     except:
         model = joblib.load(
-            "ML_Model/API_2/PDF/Parathyroid/Model/EnsembleModel(RF,DT,GB)(Hyper- Hypo-Anthor-Normal).h5")
+            "DocTork-master/ML_Model/API_2/PDF/Parathyroid/Model/EnsembleModel(RF,DT,GB)(Hyper- Hypo-Anthor-Normal).h5")
         features = list(model.feature_names_in_)
         return 'Your uploaded PDF can\'t be detected \n \t Enter Manually the Following Please : ', features[:-1]

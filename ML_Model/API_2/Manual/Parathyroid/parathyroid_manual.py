@@ -14,7 +14,7 @@ import numpy as np
 
 def predict_manual(custom_values_list):
     model = joblib.load(
-        'ML_Model/API_2/Manual/Parathyroid/Model/EnsembleModel(RF,DT,GB)(Hyper- Hypo-Anthor-Normal).h5')
+        'DocTork-master/ML_Model/API_2/Manual/Parathyroid/Model/EnsembleModel(RF,DT,GB)(Hyper- Hypo-Anthor-Normal).h5')
 
     features = model.feature_names_in_
     custom_data = pd.DataFrame(data=np.array(

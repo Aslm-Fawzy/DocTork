@@ -14,9 +14,9 @@ import numpy as np
 
 def predict_manual(custom_values_list):
     model_acute_l = joblib.load(
-        'ML_Model/API_2/Manual/Leukemia/Model/RandomForestModel(AcuteL-m,f).h5')
+        'DocTork-master/ML_Model/API_2/Manual/Leukemia/Model/RandomForestModel(AcuteL-m,f).h5')
     model_cml = joblib.load(
-        'ML_Model/API_2/Manual/Leukemia/Model/RandomForestModel(CML-m,f).h5')
+        'DocTork-master/ML_Model/API_2/Manual/Leukemia/Model/RandomForestModel(CML-m,f).h5')
     features = list(model_acute_l.feature_names_in_) + \
         list(model_cml.feature_names_in_)
     features.pop(3)  # Delete Duplicated Gender_Male from Feature List

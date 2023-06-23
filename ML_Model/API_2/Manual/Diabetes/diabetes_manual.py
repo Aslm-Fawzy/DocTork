@@ -15,11 +15,11 @@ import numpy as np
 def predict_manual(custom_values_list):
 
     model_hba1c = joblib.load(
-        "ML_Model/API_2/Manual/Diabetes/Hb_A1C_Test/Model/HbA1c.h5")
+        "DocTork-master/ML_Model/API_2/Manual/Diabetes/Hb_A1C_Test/Model/HbA1c.h5")
     model_fpg = joblib.load(
-        "ML_Model/API_2/Manual/Diabetes/FPG_Test/Model/FPG.h5")
+        "DocTork-master/ML_Model/API_2/Manual/Diabetes/FPG_Test/Model/FPG.h5")
     model_2hrpp = joblib.load(
-        "ML_Model/API_2/Manual/Diabetes/HrPP_Test/Model/HrPP.h5")
+        "DocTork-master/ML_Model/API_2/Manual/Diabetes/HrPP_Test/Model/HrPP.h5")
     faatures_hbalc = list(model_hba1c.feature_names_in_)
     faatures_fpg = list(model_fpg.feature_names_in_)
     faatures_2hrpp = list(model_2hrpp.feature_names_in_)
